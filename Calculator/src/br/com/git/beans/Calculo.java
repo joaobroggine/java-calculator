@@ -6,10 +6,13 @@ import javax.swing.JLabel;
 
 public class Calculo {
 
-    private static int number1 = 0;
-    private static int number2 = 0;
+	private static boolean sum = false;
+	private static boolean minus = false;
+	private static boolean times = false;
+	private static boolean divide = false;
     private static boolean firstNumberSet = false;
-    private static boolean secondNumberSet = false;
+    private static String number1String = "";
+    private static String number2String = "";
     private static JLabel resultLabel;
 
     public Calculo() {}
@@ -120,12 +123,62 @@ public class Calculo {
         sumbutton.setFocusPainted(false);
         
         sumbutton.addActionListener(e -> {
-            if (firstNumberSet) {
-                resultLabel.setText(number1 + " + ");
+            if (!firstNumberSet) {
+                firstNumberSet = true;
+				resultLabel.setText(number1String + " + ");
+				sum = true;
             }
         });
         
         return sumbutton;
+    }
+    
+    public static JButton minus() {
+        JButton minusbutton = new JButton("-");
+        minusbutton.setBackground(Color.GRAY);
+        minusbutton.setFocusPainted(false);
+        
+        minusbutton.addActionListener(e -> {
+            if (!firstNumberSet) {
+                firstNumberSet = true;
+				resultLabel.setText(number1String + " - ");
+				minus = true;
+            }
+        });
+        
+        return minusbutton;
+    }
+    
+    public static JButton times() {
+        JButton timesbutton = new JButton("x");
+        timesbutton.setBackground(Color.GRAY);
+        timesbutton.setFocusPainted(false);
+        
+        timesbutton.addActionListener(e -> {
+            if (!firstNumberSet) {
+                firstNumberSet = true;
+				resultLabel.setText(number1String + " x ");
+				times = true;
+            }
+        });
+        
+        return timesbutton;
+    }
+    
+    public static JButton divide() {
+        JButton dividebutton = new JButton("÷");
+        dividebutton.setBackground(Color.GRAY);
+        dividebutton.setFocusPainted(false);
+        
+        dividebutton.addActionListener(e -> {
+            if (!firstNumberSet) {
+                firstNumberSet = true;
+				resultLabel.setText(number1String + " ÷ ");
+				divide = true;
+            }
+        });
+        
+        return dividebutton;
     }
     
     public static JButton equal() {
@@ -134,14 +187,50 @@ public class Calculo {
         equal.setFocusPainted(false);
         
         equal.addActionListener(e -> {
-            if (firstNumberSet && secondNumberSet) {
+        	if (firstNumberSet && !number2String.isEmpty() && sum == true) {
+                int number1 = Integer.parseInt(number1String);
+                int number2 = Integer.parseInt(number2String);
                 int sum = number1 + number2;
                 updateResult(String.valueOf(sum));
                 resetCalculation();
-            }
+        	}
+        	if(firstNumberSet && !number2String.isEmpty() && minus == true) {
+        		int number1 = Integer.parseInt(number1String);
+                int number2 = Integer.parseInt(number2String);
+                int minus = number1 - number2;
+                updateResult(String.valueOf(minus));
+                resetCalculation();
+        	}
+        	if(firstNumberSet && !number2String.isEmpty() && times == true) {
+        		int number1 = Integer.parseInt(number1String);
+                int number2 = Integer.parseInt(number2String);
+                int times = number1 * number2;
+                updateResult(String.valueOf(times));
+                resetCalculation();
+        	}
+        	if(firstNumberSet && !number2String.isEmpty() && divide == true) {
+        		int number1 = Integer.parseInt(number1String);
+                int number2 = Integer.parseInt(number2String);
+                double divide = (double) number1 / number2;
+                updateResult(String.valueOf(divide));
+                resetCalculation();
+        	}
         });
         
         return equal;
+    }
+    
+    public static JButton erase() {
+    	JButton c = new JButton("C");
+        c.setBackground(Color.GRAY);
+        c.setFocusPainted(false);
+        
+        c.addActionListener(e -> {
+        	resetCalculation();
+        	updateResult("0");
+        });
+        
+        return c;
     }
 
     public static void setResultLabel(JLabel resultLabel) {
@@ -150,15 +239,27 @@ public class Calculo {
 
     private static void handleNumber(int num) {
         if (!firstNumberSet) {
-            number1 = num;
-            resultLabel.setText(String.valueOf(number1));
-            firstNumberSet = true;
-        } else if (!secondNumberSet) {
-            number2 = num;
-            resultLabel.setText(resultLabel.getText() + String.valueOf(number2));
-            secondNumberSet = true;
+            number1String += num;            
+            resultLabel.setText(number1String);
+            
+        } else if (sum == true) {
+            number2String += num;
+            resultLabel.setText(number1String + " + " + number2String);
+        }
+        else if (minus == true) {
+        	number2String += num;
+            resultLabel.setText(number1String + " - " + number2String);
+        }
+        else if (times == true) {
+        	number2String += num;
+            resultLabel.setText(number1String + " x " + number2String);
+        }
+        else if (divide == true) {
+        	number2String += num;
+            resultLabel.setText(number1String + " ÷ " + number2String);
         }
     }
+
 
     private static void updateResult(String result) {
         if (resultLabel != null) {
@@ -167,10 +268,13 @@ public class Calculo {
     }
 
     private static void resetCalculation() {
-        number1 = 0;
-        number2 = 0;
+        number1String = "";
+        number2String = "";
         firstNumberSet = false;
-        secondNumberSet = false;
+        sum = false;
+        minus = false;
+        times = false;
+    	divide = false;
     }
 
 	public int getNumber() {
