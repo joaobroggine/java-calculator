@@ -21,7 +21,9 @@ public class Interface {
                 Calculo.zero(), Calculo.one(), Calculo.two(), Calculo.divide(),
                 Calculo.three(), Calculo.four(), Calculo.five(), Calculo.sum(),
                 Calculo.six(), Calculo.seven(), Calculo.eight(), Calculo.minus(),      
-                Calculo.nine(), Calculo.times(), Calculo.erase(), Calculo.equal()
+                Calculo.nine(), Calculo.times(), Calculo.erase(), Calculo.equal(),
+                Calculo.byOne(), Calculo.exponentiation(), Calculo.squareRoot(),
+                Calculo.symbols()
             };
         
         Calculo calculo = new Calculo();

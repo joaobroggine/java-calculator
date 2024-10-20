@@ -212,6 +212,7 @@ public class Calculo {
         		int number1 = Integer.parseInt(number1String);
                 int number2 = Integer.parseInt(number2String);
                 double divide = (double) number1 / number2;
+                
                 updateResult(String.valueOf(divide));
                 resetCalculation();
         	}
@@ -231,6 +232,76 @@ public class Calculo {
         });
         
         return c;
+    }
+    
+    public static JButton byOne() {
+    	JButton byOneButton = new JButton("¹/x");
+        byOneButton.setBackground(Color.GRAY);
+        byOneButton.setFocusPainted(false);
+        
+        byOneButton.addActionListener(e -> {
+        	double number1 = Double.parseDouble(number1String);
+        	double result = 1 / number1;
+            resultLabel.setText(String.valueOf(result));
+            resetCalculation();
+            updateResult(String.valueOf(result));	
+        });
+        
+        return byOneButton;
+    }
+    
+    public static JButton exponentiation() {
+    	JButton exponentiationButton = new JButton("x²");
+        exponentiationButton.setBackground(Color.GRAY);
+        exponentiationButton.setFocusPainted(false);
+        
+        exponentiationButton.addActionListener(e -> {
+        	int number1 = Integer.parseInt(number1String);
+        	int result = number1 * number1;
+            resultLabel.setText(String.valueOf(result));
+            resetCalculation();
+            updateResult(String.valueOf(result));	
+        });
+        
+        return exponentiationButton;
+    }
+    
+    public static JButton squareRoot() {
+    	JButton squareRoot = new JButton("²√X");
+        squareRoot.setBackground(Color.GRAY);
+        squareRoot.setFocusPainted(false);
+        
+        squareRoot.addActionListener(e -> {
+        	double number1 = Double.parseDouble(number1String);
+        	double result = Math.pow(number1, 0.5);
+            resultLabel.setText(String.valueOf(result));
+            resetCalculation();
+            updateResult(String.valueOf(result));	
+        });
+        
+        return squareRoot;
+    }
+    
+    public static JButton symbols() {
+    	JButton symbol = new JButton("+/-");
+        symbol.setBackground(Color.GRAY);
+        symbol.setFocusPainted(false);
+        
+        symbol.addActionListener(e -> {
+        	int number1 = Integer.parseInt(number1String);
+        	if (number1 > 0) {
+				int result = -number1;
+				number1String = String.valueOf(result);
+				updateResult(number1String);
+			}
+        	if (number1 < 0) {
+        		int result = +number1;
+				number1String = String.valueOf(result);
+				updateResult(number1String);
+        	}
+        });
+        
+        return symbol;      
     }
 
     public static void setResultLabel(JLabel resultLabel) {
@@ -259,7 +330,6 @@ public class Calculo {
             resultLabel.setText(number1String + " ÷ " + number2String);
         }
     }
-
 
     private static void updateResult(String result) {
         if (resultLabel != null) {
