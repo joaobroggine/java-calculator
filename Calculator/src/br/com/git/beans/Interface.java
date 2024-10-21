@@ -4,7 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,17 +18,20 @@ import javax.swing.JPanel;
 public class Interface {
 
     @SuppressWarnings("static-access")
-    public static JFrame calculator() {
+    public static JFrame calculator() throws IOException {
         
         JFrame ui = new JFrame("Calculator");
+        
+        Image icon = ImageIO.read(new File("img/logo.png"));
+        ui.setIconImage(icon);
 
         JButton[] buttons = new JButton[]{
-                Calculo.zero(), Calculo.one(), Calculo.two(), Calculo.divide(),
+        		Calculo.erase(), Calculo.one(), Calculo.two(), Calculo.divide(),
                 Calculo.three(), Calculo.four(), Calculo.five(), Calculo.sum(),
                 Calculo.six(), Calculo.seven(), Calculo.eight(), Calculo.minus(),      
-                Calculo.nine(), Calculo.times(), Calculo.erase(), Calculo.equal(),
+                Calculo.nine(), Calculo.zero(), Calculo.symbols(), Calculo.times(),
                 Calculo.byOne(), Calculo.exponentiation(), Calculo.squareRoot(),
-                Calculo.symbols()
+                Calculo.equal()
             };
         
         Calculo calculo = new Calculo();
@@ -44,6 +52,9 @@ public class Interface {
         buttonPanel.setLayout(new GridLayout(5, 3));    
         
         for (JButton button : buttons) {
+        	button.setBackground(Color.decode("#ADD8E6"));
+        	button.setFocusPainted(false);
+        	button.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
             button.setFont(buttonFont);
             buttonPanel.add(button);
         }

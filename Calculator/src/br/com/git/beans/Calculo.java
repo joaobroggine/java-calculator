@@ -286,19 +286,23 @@ public class Calculo {
     	JButton symbol = new JButton("+/-");
         symbol.setBackground(Color.GRAY);
         symbol.setFocusPainted(false);
-        int number1 = Integer.parseInt(number1String);
         
         symbol.addActionListener(e -> {
-        	if (number1 > 0) {
-				int result = -number1;
-				number1String = String.valueOf(result);
-				updateResult(number1String);
-			}
-        	if (number1 < 0) {
-        		int result = +number1;
-				number1String = String.valueOf(result);
-				updateResult(number1String);
-        	}
+        	 if (!number1String.isEmpty()) {
+                 int number1 = Integer.parseInt(number1String);
+                 if (number1 > 0) {
+                	 int result = -number1;
+                	 number1String = String.valueOf(result);
+                	 updateResult(number1String);
+                 }
+                 if (number1 < 0) {
+                	 int result = +number1;
+                	 number1String = String.valueOf(result);
+                	 updateResult(number1String);
+                 }        	 
+        	 } else {
+        		 updateResult("0");
+        	 }
         });
         
         return symbol;      
