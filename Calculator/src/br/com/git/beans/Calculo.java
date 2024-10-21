@@ -6,10 +6,10 @@ import javax.swing.JLabel;
 
 public class Calculo {
 
-	private static boolean sum = false;
-	private static boolean minus = false;
-	private static boolean times = false;
-	private static boolean divide = false;
+    private static boolean sum = false;
+    private static boolean minus = false;
+    private static boolean times = false;
+    private static boolean divide = false;
     private static boolean firstNumberSet = false;
     private static String number1String = "";
     private static String number2String = "";
@@ -223,7 +223,6 @@ public class Calculo {
     
     public static JButton erase() {
     	JButton c = new JButton("C");
-        c.setBackground(Color.GRAY);
         c.setFocusPainted(false);
         
         c.addActionListener(e -> {
@@ -236,7 +235,6 @@ public class Calculo {
     
     public static JButton byOne() {
     	JButton byOneButton = new JButton("¹/x");
-        byOneButton.setBackground(Color.GRAY);
         byOneButton.setFocusPainted(false);
         
         byOneButton.addActionListener(e -> {
@@ -252,7 +250,6 @@ public class Calculo {
     
     public static JButton exponentiation() {
     	JButton exponentiationButton = new JButton("x²");
-        exponentiationButton.setBackground(Color.GRAY);
         exponentiationButton.setFocusPainted(false);
         
         exponentiationButton.addActionListener(e -> {
@@ -268,7 +265,6 @@ public class Calculo {
     
     public static JButton squareRoot() {
     	JButton squareRoot = new JButton("²√X");
-        squareRoot.setBackground(Color.GRAY);
         squareRoot.setFocusPainted(false);
         
         squareRoot.addActionListener(e -> {
@@ -288,24 +284,24 @@ public class Calculo {
         symbol.setFocusPainted(false);
         
         symbol.addActionListener(e -> {
-        	 if (!number1String.isEmpty()) {
-                 int number1 = Integer.parseInt(number1String);
-                 if (number1 > 0) {
-                	 int result = -number1;
-                	 number1String = String.valueOf(result);
-                	 updateResult(number1String);
-                 }
-                 if (number1 < 0) {
-                	 int result = +number1;
-                	 number1String = String.valueOf(result);
-                	 updateResult(number1String);
-                 }        	 
-        	 } else {
-        		 updateResult("0");
-        	 }
+            if (!firstNumberSet) {
+                if (!number1String.isEmpty()) {
+                    int number1 = Integer.parseInt(number1String);
+                    number1 = -number1;
+                    number1String = String.valueOf(number1);
+                    updateResult(number1String);
+                }
+            } else {
+                if (!number2String.isEmpty()) {
+                    int number2 = Integer.parseInt(number2String);
+                    number2 = -number2;
+                    number2String = String.valueOf(number2);
+                    resultLabel.setText(number1String + (sum ? " + " : minus ? " - " : times ? " x " : " ÷ ") + number2String);
+                }
+            }
         });
         
-        return symbol;      
+        return symbol;
     }
 
     public static void setResultLabel(JLabel resultLabel) {
@@ -335,20 +331,18 @@ public class Calculo {
         }
     }
 
-    private static void updateResult(String result) {
-        if (resultLabel != null) {
-            resultLabel.setText(result);
-        }
-    }
-
     private static void resetCalculation() {
-        number1String = "";
-        number2String = "";
         firstNumberSet = false;
         sum = false;
         minus = false;
         times = false;
-    	divide = false;
+        divide = false;
+        number1String = "";
+        number2String = "";
+    }
+
+    private static void updateResult(String result) {
+        resultLabel.setText(result);
     }
 
 	public int getNumber() {
